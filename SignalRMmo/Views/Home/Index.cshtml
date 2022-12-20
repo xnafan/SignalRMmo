@@ -3,11 +3,12 @@
 }
 
 <div class="text-center">
-    <canvas id="gameCanvas" width="800" height="600" style="border: 1px solid black;" tabindex="1"></canvas>
+    <canvas id="gameCanvas" width="800" height="600" style="border: 1px solid black;" tabindex="0"></canvas>
     <div id="joinControls">
         <input type="text" name="playerName" id="playerName" placeholder="player name" />
         <button id="joinGameButton" onclick="joinGame()" disabled="disabled">Join game</button>
     </div>
 </div>
 <script src="js/signalr.js"></script>
+<script src="js/GameCanvas.js"></script>
 <script src="js/mmo.js"></script>
