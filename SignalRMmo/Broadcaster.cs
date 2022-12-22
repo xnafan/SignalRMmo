@@ -7,14 +7,14 @@ public class Broadcaster
 {
     #region properties
     private readonly TimeSpan BroadcastInterval = TimeSpan.FromMilliseconds(25);
-    private readonly IHubContext<MmoHub> _hubContext;
+    private readonly IHubContext<MmoHub, IMmoClientHub> _hubContext;
     private Timer _broadcastLoop;
     private bool _dataUpdated = false;
     public IPlayerContainer PlayerContainer { get; set; } = new PlayerContainer();
     #endregion
 
     #region Constructor
-    public Broadcaster(IHubContext<MmoHub> hubContext)
+    public Broadcaster(IHubContext<MmoHub, IMmoClientHub> hubContext)
     {
         _hubContext = hubContext;
         _broadcastLoop = new Timer(BroadCastMovement, null, BroadcastInterval, BroadcastInterval);
@@ -40,9 +40,14 @@ public class Broadcaster
     {
         if (_dataUpdated)
         {
-            await _hubContext.Clients.All.SendAsync("gameUpdate", PlayerContainer.GetPlayers());
+            await BroadCastState();
             _dataUpdated = false;
         }
     } 
+
+    public async Task BroadCastState()
+    {
+        await _hubContext.Clients.All.GameUpdate(PlayerContainer.GetPlayers());
+    }
     #endregion
 }

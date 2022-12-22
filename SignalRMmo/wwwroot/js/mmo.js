@@ -10,6 +10,8 @@ var connection = new signalR.HubConnectionBuilder().withUrl("/mmo").build();
 /// CONNECTION RELATED  //////////////////////////////
 
 connection.start().then(function () {
+    connection.invoke("Subscribe")
+        .catch(function (err) { alert("Error subscribing to game updates"); });
     var playerNameInput = document.getElementById("playerName");
     playerNameInput.addEventListener("input", _ => {
             document.getElementById("joinGameButton").disabled = playerNameInput.value.length <= 0;
@@ -64,19 +66,17 @@ function sendUpdates() {
 }
 
 function degreesToMovement(degrees) {
-    
     let xMove = Math.cos(degrees);
     let yMove = Math.sin(degrees);
     let move = { x: xMove, y: yMove };
     return move;
-    
 }
 
 ////   DRAWING     //////////////////////////
 function drawPlayers(players) {
     var playerSize = 25;
     var self;
-    var color = 'cyan';
+    var color = 'silver';
     for (var i = 0; i < players.length; i++) {
         var player = players[i];
         if (player.id == playerId) {
