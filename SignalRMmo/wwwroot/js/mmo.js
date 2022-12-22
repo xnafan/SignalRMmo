@@ -2,6 +2,7 @@
 
 /// VARIABLES //////////////////////////////
 const domCanvas = document.getElementById("gameCanvas");
+const domErrorDiv = document.getElementById("errorDiv");
 const gameCanvas = new GameCanvas(domCanvas);
 let playerId = "";
 let playerPosition = undefined;
@@ -12,13 +13,13 @@ var connection = new signalR.HubConnectionBuilder().withUrl("/mmo").build();
 
 connection.start().then(function () {
     connection.invoke("Subscribe")
-        .catch(function (err) { alert("Error subscribing to game updates"); });
+        .catch(function (err) { writeError("Error subscribing to game updates"); });
     var playerNameInput = document.getElementById("playerName");
     playerNameInput.addEventListener("input", _ => {
             document.getElementById("joinGameButton").disabled = playerNameInput.value.length <= 0;
     });
 }).catch(function (err) {
-    return console.error(err.toString());
+    writeError(err.toString());
 });
 
 
@@ -36,14 +37,14 @@ function joinGame() {
     var textBox = document.getElementById("playerName");
     connection.invoke("Join", textBox.value)
         .then(() => startGameLoop())
-        .catch(function (err) {alert("Error joining game for '" + textBox.value + "': " + err);});
+        .catch(function (err) {writeError("Error joining game for '" + textBox.value + "': " + err);});
     document.getElementById("joinControls").style.display = "none";
 }
 
 function move(movement) {
     if (movement.x == 0 && movement.y == 0) { return; }
     connection.invoke("Move", playerId, { x: Math.round(movement.x * speed), y: Math.round(movement.y * speed) })
-        .catch(function (err) {alert("Error sending move (" + movement.x + "," + movement.y + ") to server. Error was: " + err.message);});
+        .catch(function (err) { writeError("Error sending move (" + movement.x + "," + movement.y + ") to server. Error was: " + err.message);});
 }
 
 function startGameLoop() {
@@ -112,6 +113,10 @@ function getDistance(point1, point2) {
     let distY = point1.y - point2.y;
 
     return Math.sqrt(distX * distX + distY * distY);
+}
+
+function writeError(message) {
+    domErrorDiv.innerHTML = message;
 }
 
 
