@@ -4,7 +4,7 @@
 
 <div class="text-center">
     <div>
-    <canvas id="gameCanvas" width="1024" height="800" style="border: 1px solid black;margin:25px; background-color:forestgreen;" tabindex="0"></canvas>
+    <canvas id="gameCanvas" width="800" height="600" style="border: 1px solid black;margin:25px; background-color:forestgreen;" tabindex="0"></canvas>
     </div>
     <div class="text-center" id="joinControls">
         <form>
@@ -16,3 +16,6 @@
 <script src="js/signalr.js"></script>
 <script src="js/GameCanvas.js"></script>
 <script src="js/mmo.js"></script>
+<script>
+    window.addEventListener("load", (event) => document.getElementById("playerName").focus());
+</script>
