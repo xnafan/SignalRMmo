@@ -4,13 +4,16 @@
 const gameCanvas = new GameCanvas(document.getElementById("gameCanvas"));
 let playerId = "";
 let playerPosition = undefined;
-const speed = 5;
+const speed = 7;
 var connection = new signalR.HubConnectionBuilder().withUrl("/mmo").build();
 
 /// CONNECTION RELATED  //////////////////////////////
 
 connection.start().then(function () {
-    document.getElementById("joinGameButton").disabled = false;
+    var playerNameInput = document.getElementById("playerName");
+    playerNameInput.addEventListener("input", _ => {
+            document.getElementById("joinGameButton").disabled = playerNameInput.value.length <= 0;
+    });
 }).catch(function (err) {
     return console.error(err.toString());
 });

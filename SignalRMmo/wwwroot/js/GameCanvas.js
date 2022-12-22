@@ -51,16 +51,15 @@
     #mouseDown(event) {
         this.#updateMousePosition(event);
         this.#mouseButtonDown = true;
-        //console.log("mouse DOWN at: (" + this.#mousePosition.x + "," + this.#mousePosition.y + ") - mouseButton down:" + this.#mouseButtonDown);
     }
 
     #mouseMove(event) {
+        this.#mouseButtonDown = event.buttons & 1; 
         this.#updateMousePosition(event);
     }
     #mouseUp(event) {
         this.#updateMousePosition(event);
         this.#mouseButtonDown = false;
-       // console.log("mouse UP at: (" + this.#mousePosition.x + "," + this.#mousePosition.y + ") - mouseButton down: " + this.#mouseButtonDown);
     }
 
     #mouseOut(event) {
