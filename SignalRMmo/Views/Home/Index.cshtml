@@ -4,13 +4,16 @@
 
 <div class="text-center">
     <div>
-    <canvas id="gameCanvas" width="800" height="600" style="border: 1px solid black;margin:25px; background-color:forestgreen;" tabindex="0"></canvas>
-    </div>
-    <div class="text-center" id="joinControls">
-        <form>
-            <input type="text" name="playerName" id="playerName" placeholder="player name" />
-            <button id="joinGameButton" onclick="joinGame();return false;" disabled="disabled">Join game</button>
-        </form>
+        <canvas id="gameCanvas" width="800" height="600" style="border: 1px solid black;background-color:forestgreen;" tabindex="0"></canvas>
+        <div class="text-center" id="joinControls">
+            <form style="margin:0px;padding:0px;">
+                <input type="text" name="playerName" id="playerName" placeholder="player name" />
+                <button id="joinGameButton" onclick="joinGame();return false;" disabled="disabled">Join game</button>
+            </form>
+        </div>
+        <div>
+            <a href="javascript:window.open(window.location.href, makeId(), '_new');">new window</a>
+        </div>
     </div>
 </div>
 <script src="js/signalr.js"></script>
@@ -18,4 +21,13 @@
 <script src="js/mmo.js"></script>
 <script>
     window.addEventListener("load", (event) => document.getElementById("playerName").focus());
+    function makeId(length) {
+        var result = '';
+        var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var charactersLength = characters.length;
+        for (var i = 0; i < length; i++) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+        return result;
+    }
 </script>

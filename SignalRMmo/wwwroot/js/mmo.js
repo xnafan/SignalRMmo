@@ -1,7 +1,8 @@
 ﻿"use strict";
 
 /// VARIABLES //////////////////////////////
-const gameCanvas = new GameCanvas(document.getElementById("gameCanvas"));
+const domCanvas = document.getElementById("gameCanvas");
+const gameCanvas = new GameCanvas(domCanvas);
 let playerId = "";
 let playerPosition = undefined;
 const speed = 7;
@@ -42,7 +43,7 @@ function joinGame() {
 function move(movement) {
     if (movement.x == 0 && movement.y == 0) { return; }
     connection.invoke("Move", playerId, { x: Math.round(movement.x * speed), y: Math.round(movement.y * speed) })
-        .catch(function (err) {alert("Error sending move to server");});
+        .catch(function (err) {alert("Error sending move (" + movement.x + "," + movement.y + ") to server. Error was: " + err.message);});
 }
 
 function startGameLoop() {
@@ -112,3 +113,21 @@ function getDistance(point1, point2) {
 
     return Math.sqrt(distX * distX + distY * distY);
 }
+
+
+// Prevent scrolling when touching the canvas
+document.body.addEventListener("touchstart", function (e) {
+    if (e.target == domCanvas) {
+        e.preventDefault();
+    }
+}, { passive: false });
+document.body.addEventListener("touchend", function (e) {
+    if (e.target == domCanvas) {
+        e.preventDefault();
+    }
+}, { passive: false });
+document.body.addEventListener("touchmove", function (e) {
+    if (e.target == domCanvas) {
+        e.preventDefault();
+    }
+}, { passive: false });

@@ -1,4 +1,10 @@
-﻿namespace SignalRMmo.Model;
+﻿using System.Drawing;
+
+namespace SignalRMmo.Model;
+
+/// <summary>
+/// Class which 
+/// </summary>
 public class PlayerContainer : IPlayerContainer
 {
     #region Properties
@@ -9,7 +15,7 @@ public class PlayerContainer : IPlayerContainer
     #region Methods
     public Player CreatePlayer(string playerName, int mapWidth=800, int mapHeight=600)
     {
-        var player = new Player() { Name = playerName, Position = new System.Drawing.Point(_random.Next(mapWidth/4*3)+ mapWidth / 4, _random.Next(mapHeight / 4*3) + mapHeight / 4) };
+        var player = new Player() { Name = playerName, Position = new Point(_random.Next((int)(mapWidth / 4f * 3f))+ mapWidth / 4, _random.Next((int)(mapHeight / 4f * 3f)) + mapHeight / 4) };
         _players.Add(player);
         return player;
     }

@@ -2,6 +2,14 @@
 using SignalRMmo.Model;
 using System.Drawing;
 namespace SignalRMmo.Hubs;
+
+/// <summary>
+/// This class is a SignalR hub which allows for clients to 
+/// - join a game, with the desired player name
+/// - subscribe to events, which sets up the client for receiving game updates
+/// - send their desired moves
+/// - restart the game
+/// </summary>
 public class MmoHub : Hub<IMmoClientHub>
 {
     Broadcaster _broadcaster;
