@@ -13,12 +13,15 @@ public class Broadcaster
     public IPlayerContainer PlayerContainer { get; set; } = new PlayerContainer();
     #endregion
 
+    #region Constructor
     public Broadcaster(IHubContext<MmoHub> hubContext)
     {
         _hubContext = hubContext;
-        _broadcastLoop = new Timer(BroadCastMovement,null,BroadcastInterval,BroadcastInterval);
-    }
+        _broadcastLoop = new Timer(BroadCastMovement, null, BroadcastInterval, BroadcastInterval);
+    } 
+    #endregion
 
+    #region Methods
     public Player Join(string playerName)
     {
         _dataUpdated = true;
@@ -30,16 +33,16 @@ public class Broadcaster
         if (player != null)
         {
             player.Position = player.Position.Add(relativeMotion);
-            _dataUpdated = true; 
+            _dataUpdated = true;
         }
     }
-
     private async void BroadCastMovement(object? state)
     {
         if (_dataUpdated)
         {
             await _hubContext.Clients.All.SendAsync("gameUpdate", PlayerContainer.GetPlayers());
-            _dataUpdated = false; 
+            _dataUpdated = false;
         }
-    }
+    } 
+    #endregion
 }

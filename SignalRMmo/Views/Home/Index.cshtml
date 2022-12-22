@@ -1,12 +1,16 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "SignalR Sample MMO";
 }
 
 <div class="text-center">
-    <canvas id="gameCanvas" width="800" height="600" style="border: 1px solid black;" tabindex="0"></canvas>
-    <div id="joinControls">
-        <input type="text" name="playerName" id="playerName" placeholder="player name" />
-        <button id="joinGameButton" onclick="joinGame()" disabled="disabled">Join game</button>
+    <div>
+    <canvas id="gameCanvas" width="1024" height="800" style="border: 1px solid black;margin:25px; background-color:forestgreen;" tabindex="0"></canvas>
+    </div>
+    <div class="text-center" id="joinControls">
+        <form>
+            <input type="text" name="playerName" id="playerName" placeholder="player name" />
+            <button id="joinGameButton" onclick="joinGame();return false;" disabled="disabled">Join game</button>
+        </form>
     </div>
 </div>
 <script src="js/signalr.js"></script>

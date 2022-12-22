@@ -1,8 +1,12 @@
 ﻿namespace SignalRMmo.Model;
 public class PlayerContainer : IPlayerContainer
 {
+    #region Properties
     private static readonly Random _random = new Random();
     private List<Player> _players = new List<Player>();
+    #endregion
+
+    #region Methods
     public Player CreatePlayer(string playerName)
     {
         var player = new Player() { Name = playerName, Position = new System.Drawing.Point(_random.Next(600), _random.Next(400)) };
@@ -17,5 +21,6 @@ public class PlayerContainer : IPlayerContainer
         {
             yield return player;
         }
-    }
+    } 
+    #endregion
 }
