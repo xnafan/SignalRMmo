@@ -1,4 +1,11 @@
-﻿class GameCanvas {
+﻿// This clas wraps an HTML5 canvas and simplifies using it for games
+// It facilitates getting
+//  - the position of the mouse
+//  - the state of the primary mousebutton
+//  - the indicated direction to move based on keyboard input
+
+
+class GameCanvas {
 
     #keyboardStatus = { up: false, down: false, left: false, right: false };
     #ctx;
@@ -32,19 +39,19 @@
 
     #keyDown(event) {
         switch (event.code) {
-            case 'ArrowLeft': this.#keyboardStatus.left = true; break;
-            case 'ArrowRight': this.#keyboardStatus.right = true; break;
-            case 'ArrowUp': this.#keyboardStatus.up = true; break;
-            case 'ArrowDown': this.#keyboardStatus.down = true; break;
+            case 'KeyA': case 'ArrowLeft': this.#keyboardStatus.left = true; break;
+            case 'KeyD': case 'ArrowRight': this.#keyboardStatus.right = true; break;
+            case 'KeyW': case 'ArrowUp': this.#keyboardStatus.up = true; break;
+            case 'KeyS': case 'ArrowDown': this.#keyboardStatus.down = true; break;
         }
     }
 
     #keyUp(event) {
         switch (event.code) {
-            case 'ArrowLeft': this.#keyboardStatus.left = false; break;
-            case 'ArrowRight': this.#keyboardStatus.right = false; break;
-            case 'ArrowUp': this.#keyboardStatus.up = false; break;
-            case 'ArrowDown': this.#keyboardStatus.down = false; break;
+            case 'KeyA': case 'ArrowLeft': this.#keyboardStatus.left = false; break;
+            case 'KeyD': case 'ArrowRight': this.#keyboardStatus.right = false; break;
+            case 'KeyW': case 'ArrowUp': this.#keyboardStatus.up = false; break;
+            case 'KeyS': case 'ArrowDown': this.#keyboardStatus.down = false; break;
         }
     }
 
@@ -97,12 +104,11 @@
             
             var horizontalDistanceToMouse = this.#mousePosition.x - fromPoint.x;
             var verticalDistanceToMouse = this.#mousePosition.y - fromPoint.y;
-            var degrees = this.#calcAngleDegrees(horizontalDistanceToMouse, verticalDistanceToMouse);
-           // console.log("x distance:" + horizontalDistanceToMouse + ", y distance:" + verticalDistanceToMouse + "= degrees:" + degrees);
+            var degrees = this.#calcAngleRadian(horizontalDistanceToMouse, verticalDistanceToMouse);
             return degrees;
         }
     }
-    #calcAngleDegrees(x, y) {
+    #calcAngleRadian(x, y) {
         return Math.atan2(y, x);
     }
 }
