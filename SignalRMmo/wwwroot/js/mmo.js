@@ -8,7 +8,7 @@ const gameCanvas = new GameCanvas(domCanvas);
 let playerId = "";
 let playerPosition = undefined;
 const speed = 7;
-var connection = new signalR.HubConnectionBuilder().withUrl("/mmo").build();
+var connection = new signalR.HubConnectionBuilder().withUrl("/mmo").withAutomaticReconnect().build();
 
 /// CONNECTION RELATED  //////////////////////////////
 
