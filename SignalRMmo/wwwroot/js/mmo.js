@@ -4,6 +4,7 @@
 const domCanvas = document.getElementById("gameCanvas");
 const domErrorDiv = document.getElementById("errorDiv");
 const gameCanvas = new GameCanvas(domCanvas);
+
 let playerId = "";
 let playerPosition = undefined;
 const speed = 7;
@@ -24,7 +25,6 @@ connection.start().then(function () {
 
 
 connection.on("gameUpdate", function (players) {
-    gameCanvas.context.fillStyle = "gray";
     gameCanvas.context.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
     drawPlayers(players);
 });
@@ -54,16 +54,20 @@ function startGameLoop() {
 function sendUpdates() {
     var movement;
     var mousePosition = gameCanvas.mousePosition;
-    if (gameCanvas.mouseButtonDown && mousePosition !== undefined && playerPosition !== undefined) {
+    //if the mouse button is currently pressed at a specified location
+    //and we have a position for the player, we calculate which direction to move
+    if (gameCanvas.mouseButtonDown
+        && mousePosition !== undefined
+        && playerPosition !== undefined) {
         var directionTowardsMouse = gameCanvas.getDirectionTowardsMouse(playerPosition);
         movement = degreesToMovement(directionTowardsMouse);
         if (getDistance(mousePosition, playerPosition) < speed) {
             movement = { x: (mousePosition.x - playerPosition.x)/speed, y: (mousePosition.y - playerPosition.y)/speed };
         }
     }
-    else {
-        movement = gameCanvas.getKeyboardMovement();
-    }
+    //else we determine movement by listening to the keyboard state
+    else { movement = gameCanvas.getKeyboardMovement(); }
+
     move(movement);
 }
 
